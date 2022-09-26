@@ -1,6 +1,4 @@
-from crypt import methods
 import json
-from urllib import response
 from flask import Flask
 from flask import request
 
@@ -12,8 +10,10 @@ sys.path.append(os.path.abspath("./app/models/utils"))
 
 from app.models.utils.utilitariosUsuarios import UtilitariosUsuarios
 from app.models.login import Login
+from app.models.empresa import Empresa
 
 app = Flask(__name__)
+app.debug = True
 
 @app.route("/cadastroUsuario", methods=['POST'])
 
@@ -33,4 +33,15 @@ def login():
       data = request.form.to_dict()
       response = login.login(data)
       return response
-app.run("192.168.0.11", "8000")
+
+@app.route("/cadastrarEmpresa", methods=["POST"])
+
+def cadastrarEmpresa():
+   if request.method == "POST":
+      data = request.form.to_dict()
+      login = Empresa(data['razaoSocial'],data['cnpj'],data['fantasia'],data['telefone'],data['e-mail'],data['cep'],
+         data['logradouro'],data['bairro'],data['numero'],data['cidade'],data['tipo'],data['matriz'],)
+      response = login.cadastrarEmpresa()
+      return response
+
+app.run()
