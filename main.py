@@ -39,7 +39,7 @@ def login():
 def cadastrarEmpresa():
    if request.method == "POST":
       data = request.form.to_dict()
-      login = Empresa(data['razaoSocial'],data['cnpj'],data['fantasia'],data['telefone'],data['e-mail'],data['cep'],
+      login = Empresa(data['razaoSocial'],data['cnpj'],data['fantasia'],data['telefone'],data['email'],data['cep'],
          data['logradouro'],data['bairro'],data['numero'],data['cidade'],data['tipo'],data['matriz'],)
       response = login.cadastrarEmpresa()
       return response

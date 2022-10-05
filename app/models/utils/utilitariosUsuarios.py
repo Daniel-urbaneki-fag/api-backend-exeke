@@ -4,6 +4,7 @@ import bcrypt
 import re
 
 import utils
+from .message import message
 
 class UtilitariosUsuarios():
 
@@ -16,32 +17,32 @@ class UtilitariosUsuarios():
         usuario["senha"] = bcrypt.hashpw(bytes(usuario["senha"], 'utf-8'), bcrypt.gensalt())
 
         if not self.validarCpf(usuario["cpf"]):
-            return "Cpf inválido"
+            return message("Cpf inválido", (220/255, 53/255, 69/255, 1))
         
         conn = sqlite3.connect('db.sqlite3')
         cursor = conn.cursor()
         
         for dados in cursor.execute(""" SELECT * FROM usuarios WHERE cpf=?; """, (usuario["cpf"],)):
             if(dados):
-               return "O cpf já está cadastrado !"
+               return message("O cpf já está cadastrado !", (220/255, 53/255, 69/255, 1))
 
         if not utils.Utils.validarEmail(usuario["email"]):
-            return "Email invalido"
+            return message("Email invalido", (220/255, 53/255, 69/255, 1))
         
         usuario["logradouro"] = usuario["logradouro"].capitalize()
 
         if(len(usuario["numero"]) > 4):
-            return "Numero da casa inválido"
+            return message("Numero da casa inválido", (220/255, 53/255, 69/255, 1))
         
         usuario["complemento"] = usuario["complemento"].capitalize()
 
         usuario["bairro"]  = usuario["bairro"].capitalize()
 
         if not utils.Utils.validarCep(usuario["cep"]):
-            return "Cep inválido"
+            return message("Cep inválido", (220/255, 53/255, 69/255, 1))
         
         if len(usuario["telefone"]) > 11:
-            return "Telefone inválido"
+            return message("Telefone inválido", (220/255, 53/255, 69/255, 1))
         
         usuario["cidade"] = usuario["cidade"].capitalize()
 
@@ -54,7 +55,7 @@ class UtilitariosUsuarios():
 
         conn.commit()
         conn.close()
-        return "Usuário cadastrado com sucesso!"
+        return message("Usuário cadastrado com sucesso!", (40/255, 167/255, 67/255, 1))
 
     def criaTabelaUsuario(self,):
         conn = sqlite3.connect('db.sqlite3')
