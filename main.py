@@ -1,4 +1,3 @@
-import json
 from flask import Flask
 from flask import request
 
@@ -6,11 +5,11 @@ import os
 import sys
 
 sys.path.append(os.path.abspath("."))
-sys.path.append(os.path.abspath("./app/models/utils"))
+sys.path.append(os.path.abspath("./models/utils"))
 
-from app.models.utils.utilitariosUsuarios import UtilitariosUsuarios
-from app.models.login import Login
-from app.models.empresa import Empresa
+from models.utils.utilitariosUsuarios import UtilitariosUsuarios
+from models.login import Login
+from models.empresa import Empresa
 
 app = Flask(__name__)
 app.debug = True
