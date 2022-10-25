@@ -1,4 +1,3 @@
-from flask import Flask
 from flask import request
 
 import os
@@ -10,9 +9,7 @@ sys.path.append(os.path.abspath("./models/utils"))
 from models.utils.utilitariosUsuarios import UtilitariosUsuarios
 from models.login import Login
 from models.empresa import Empresa
-
-app = Flask(__name__)
-app.debug = True
+from app import app
 
 @app.route("/cadastroUsuario", methods=['POST'])
 

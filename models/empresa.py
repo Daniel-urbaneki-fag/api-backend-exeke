@@ -24,8 +24,11 @@ class Empresa():
     def cadastrarEmpresa(self):
         self.razaoSocial = self.razaoSocial.upper()
 
+
         if(not Utils.validarCnpj(self.cnpj)):
             return message("Cnpj inválido!", (220/255, 53/255, 69/255, 1))
+            
+        self.cnpj = self.converteCnpjNumero(self.cnpj)
 
         conn = sqlite3.connect('instance/app.db')
         cursor = conn.cursor()
@@ -173,3 +176,10 @@ class Empresa():
         conn.close()
 
         return ['Leitura de Empresa.', lista]
+    
+    def converteCnpjNumero(self, cnpj):
+        numbers = ""
+        for digit in cnpj:
+            if digit.isdigit():
+                numbers = numbers + digit
+        return int(numbers)

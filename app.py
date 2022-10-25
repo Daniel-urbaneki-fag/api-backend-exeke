@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.debug = True
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -25,7 +26,7 @@ class Usuarios(db.Model):
     cidade = db.Column(db.String(128))
     criado_em = db.Column(db.Date())
 
-class Empresa(db.Model):
+class Empresas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     razaoSocial = db.Column(db.String(128))
     cnpj = db.Column(db.Integer)
@@ -38,4 +39,5 @@ class Empresa(db.Model):
     numero = db.Column(db.String(128))
     cidade = db.Column(db.String(128))
     estado = db.Column(db.String(128))
+    tipo = db.Column(db.String(128))
     criado_em = db.Column(db.Date())

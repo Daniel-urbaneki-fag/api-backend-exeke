@@ -17,6 +17,8 @@ class UtilitariosUsuarios():
         if not self.validarCpf(usuario["cpf"]):
             return message("Cpf inválido", (220/255, 53/255, 69/255, 1))
         
+        usuario["cpf"] = self.converteCpfNumero(usuario["cpf"])
+        
         conn = sqlite3.connect('instance/app.db')
         cursor = conn.cursor()
         
@@ -56,10 +58,6 @@ class UtilitariosUsuarios():
         return message("Usuário cadastrado com sucesso!", (40/255, 167/255, 67/255, 1))
 
     def validarCpf(self, cpf):
-        # Verifica a formatação do CPF
-        if not re.match(r'\d{3}\.\d{3}\.\d{3}-\d{2}', cpf):
-            return False
-
         # Obtém apenas os números do CPF, ignorando pontuações
         numbers = [int(digit) for digit in cpf if digit.isdigit()]
 
@@ -80,3 +78,10 @@ class UtilitariosUsuarios():
             return False
 
         return True
+    
+    def converteCpfNumero(self, cpf):
+        numbers = ""
+        for digit in cpf:
+            if digit.isdigit():
+                numbers = numbers + digit
+        return int(numbers)
