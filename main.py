@@ -11,6 +11,15 @@ from models.login import Login
 from models.empresa import Empresa
 from app import app
 
+@app.route("/lerTabelaUsuarios", methods=['GET'])
+
+def lerTabelaUsuarios():
+   if request.method == "GET":
+      utilsUsuario = UtilitariosUsuarios()
+      response = utilsUsuario.lerTabelaUsuarios()
+
+      return response
+
 @app.route("/cadastroUsuario", methods=['POST'])
 
 def cadastroUsuario():

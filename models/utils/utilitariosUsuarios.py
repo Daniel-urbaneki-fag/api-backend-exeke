@@ -8,6 +8,16 @@ from .message import message
 
 class UtilitariosUsuarios():
 
+    def lerTabelaUsuarios(self):
+        conn = sqlite3.connect('instance/app.db')
+        cursor = conn.cursor()
+
+        response = []
+
+        for dados in cursor.execute(""" SELECT nome, email, empresa, telefone FROM usuarios;"""):
+            response.append(dados)
+        return response
+
     def cadastrarUsuario(self, usuario):
 
         usuario["nome"] = usuario["nome"].capitalize()
@@ -48,10 +58,10 @@ class UtilitariosUsuarios():
 
         usuario["estado"] = usuario["estado"].capitalize()
 
-        cursor.execute("""INSERT INTO usuarios (nome, tipo, senha, cpf, email, logradouro, numero, 
+        cursor.execute("""INSERT INTO usuarios (nome, tipo, empresa, senha, cpf, email, logradouro, numero, 
         complemento, bairro, cep, telefone, cidade, estado, criado_em)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-        """, (usuario["nome"], usuario["tipo"], usuario["senha"], usuario["cpf"], usuario["email"], usuario["logradouro"], usuario["numero"], usuario["complemento"], usuario["bairro"], usuario["cep"], usuario["telefone"], usuario["cidade"], usuario["estado"], datetime.today().strftime('%d-%m-%Y')))
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        """, (usuario["nome"], usuario["tipo"], usuario["empresa"], usuario["senha"], usuario["cpf"], usuario["email"], usuario["logradouro"], usuario["numero"], usuario["complemento"], usuario["bairro"], usuario["cep"], usuario["telefone"], usuario["cidade"], usuario["estado"], datetime.today().strftime('%d-%m-%Y')))
 
         conn.commit()
         conn.close()

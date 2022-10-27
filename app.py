@@ -12,6 +12,7 @@ migrate = Migrate(app, db)
 class Usuarios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tipo = db.Column(db.Integer)
+    empresa = db.Column(db.String(128))
     nome = db.Column(db.String(128))
     senha = db.Column(db.String(128))
     cpf = db.Column(db.Integer)
