@@ -11,6 +11,16 @@ from models.login import Login
 from models.empresa import Empresa
 from app import app
 
+@app.route("/lerDadosUsuario", methods=['POST'])
+
+def lerDadosUsuario():
+   if request.method == "POST":
+      utilsUsuario = UtilitariosUsuarios()
+      data = request.form.to_dict()
+      response = utilsUsuario.lerDadosUsuario(data)
+
+      return response
+
 @app.route("/lerTabelaUsuarios", methods=['GET'])
 
 def lerTabelaUsuarios():

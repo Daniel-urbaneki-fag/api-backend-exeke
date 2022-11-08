@@ -8,13 +8,38 @@ from .message import message
 
 class UtilitariosUsuarios():
 
+    def lerDadosUsuario(self, id):
+        conn = sqlite3.connect('instance/app.db')
+        cursor = conn.cursor()
+        response = []
+
+        for dados in cursor.execute(""" SELECT tipo, empresa, nome, cpf, telefone, cep, logradouro, bairro, numero, complemento, cidade, estado, email FROM usuarios WHERE id=?;""", (id["id"],)):
+            dados = {
+                    "tipo" : dados[0], 
+                    "empresa" : dados[1], 
+                    "nome" : dados[2], 
+                    "cpf" : dados[3], 
+                    "telefone" : dados[4],
+                    "cep" : dados[5],
+                    "logradouro" : dados[6],
+                    "bairro" : dados[7],
+                    "numero" : dados[8],
+                    "complemento" : dados[9],
+                    "cidade" : dados[10],
+                    "estado" : dados[11],
+                    "email" : dados[12],
+                    }
+            response.append(dados)
+        return response
+
     def lerTabelaUsuarios(self):
         conn = sqlite3.connect('instance/app.db')
         cursor = conn.cursor()
 
         response = []
 
-        for dados in cursor.execute(""" SELECT nome, email, empresa, telefone FROM usuarios;"""):
+        for dados in cursor.execute(""" SELECT id, nome, email, empresa, telefone FROM usuarios;"""):
+            dados = {"id" : dados[0], "nome" : dados[1], "email" : dados[2], "empresa" : dados[3], "telefone" : dados[4]}
             response.append(dados)
         return response
 
